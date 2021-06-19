@@ -216,11 +216,14 @@ Matrix3f RayTracer::traceRay( Ray& currentRay, float tmin, int bounces,
 
 			float R = Ro + (1.0f-Ro) * pow(1-c, 5);
 
-			pixelColor += + (1-R)*refractedColor + (R)*reflectedColor;
+			float reflectance = hit.getMaterial()->getShininess() / 100.0f;
+
+			pixelColor += + (1-R)*refractedColor + (R * reflectance)*reflectedColor;
 		}
 		else
 		{
-			pixelColor += reflectedColor;
+			float reflectance = hit.getMaterial()->getShininess() / 100.0f;
+			pixelColor += reflectedColor*reflectance;
 		}
 
 

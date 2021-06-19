@@ -127,6 +127,23 @@
     <ClInclude Include="vecmath\include\Vector4f.h" />
     <ClInclude Include="VecUtils.h" />
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="scene01_plane.txt" />
+    <Text Include="scene02_cube.txt" />
+    <Text Include="scene03_sphere.txt" />
+    <Text Include="scene04_axes.txt" />
+    <Text Include="scene05_bunny_200.txt" />
+    <Text Include="scene06_bunny_1k.txt" />
+    <Text Include="scene06_dragon.txt" />
+    <Text Include="scene07_shine.txt" />
+    <Text Include="scene08_c.txt" />
+    <Text Include="scene09_s.txt" />
+    <Text Include="scene10_sphere.txt" />
+    <Text Include="scene11_cube.txt" />
+    <Text Include="scene12_vase.txt" />
+    <Text Include="scene13_diamond.txt" />
+    <Text Include="scene_custom.txt" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

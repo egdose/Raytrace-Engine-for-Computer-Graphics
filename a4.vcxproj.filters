@@ -19,6 +19,9 @@
     <Filter Include="Header Files\vecmath">
       <UniqueIdentifier>{4b15c008-aac0-49c3-9cb6-9fd83c4d92bb}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Scenes">
+      <UniqueIdentifier>{90ad477a-6346-4d88-bafe-ac7f50fab7a1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Image.cpp">
@@ -173,5 +176,52 @@
     <ClInclude Include="PerlinNoise.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="scene_custom.txt">
+      <Filter>Source Files\Scenes</Filter>
+    </Text>
+    <Text Include="scene01_plane.txt">
+      <Filter>Source Files\Scenes</Filter>
+    </Text>
+    <Text Include="scene02_cube.txt">
+      <Filter>Source Files\Scenes</Filter>
+    </Text>
+    <Text Include="scene03_sphere.txt">
+      <Filter>Source Files\Scenes</Filter>
+    </Text>
+    <Text Include="scene04_axes.txt">
+      <Filter>Source Files\Scenes</Filter>
+    </Text>
+    <Text Include="scene05_bunny_200.txt">
+      <Filter>Source Files\Scenes</Filter>
+    </Text>
+    <Text Include="scene06_bunny_1k.txt">
+      <Filter>Source Files\Scenes</Filter>
+    </Text>
+    <Text Include="scene06_dragon.txt">
+      <Filter>Source Files\Scenes</Filter>
+    </Text>
+    <Text Include="scene07_shine.txt">
+      <Filter>Source Files\Scenes</Filter>
+    </Text>
+    <Text Include="scene08_c.txt">
+      <Filter>Source Files\Scenes</Filter>
+    </Text>
+    <Text Include="scene09_s.txt">
+      <Filter>Source Files\Scenes</Filter>
+    </Text>
+    <Text Include="scene10_sphere.txt">
+      <Filter>Source Files\Scenes</Filter>
+    </Text>
+    <Text Include="scene11_cube.txt">
+      <Filter>Source Files\Scenes</Filter>
+    </Text>
+    <Text Include="scene12_vase.txt">
+      <Filter>Source Files\Scenes</Filter>
+    </Text>
+    <Text Include="scene13_diamond.txt">
+      <Filter>Source Files\Scenes</Filter>
+    </Text>
   </ItemGroup>
 </Project>
