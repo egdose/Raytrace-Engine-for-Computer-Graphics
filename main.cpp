@@ -14,6 +14,10 @@
 #include <string.h>
 #include <chrono>
 
+//#include <glad/glad.h>
+#include <GL/glew.h>
+#include <GLFW/glfw3.h>
+
 using namespace std;
 
 using namespace std::chrono;
@@ -21,13 +25,111 @@ using namespace std::chrono;
 #define SUPERSAMPLE_X 3
 #define NUM_THREADS 12
 
+constexpr auto WIDTH = 600;
+constexpr auto HEIGHT = 600;
+
 float clampedDepth ( float depthInput, float depthMin , float depthMax);
 
 #include "bitmap_image.hpp"
+
+
+//Updating the OpenGL window with pixel data
+void updateGLWindow(GLFWwindow* window, Image& outputImage)
+{
+#pragma omp critical
+	{
+		//Check whether the windows was closed or not
+		if (!glfwWindowShouldClose(window))
+		{
+			/* Render here */
+			glClear(GL_COLOR_BUFFER_BIT);
+
+			glMatrixMode(GL_PROJECTION);
+			glLoadIdentity();
+			gluOrtho2D(0.0, WIDTH, HEIGHT, 0.0);
+
+			for (register int i = 0; i < WIDTH; ++i)
+			{
+				for (register int j = 0; j < HEIGHT; ++j)
+				{
+					glBegin(GL_POINTS);
+					Vector3f color = outputImage.GetPixel(i, j);
+					glColor3f(color.x(), color.y(), color.z());
+					glVertex2i(i, j);
+					glEnd();
+				}
+			}
+
+			/* Swap front and back buffers */
+			glfwSwapBuffers(window);
+			//Handling events like resize, close or move
+			//Important, if skipped will cause the window to become not responding
+			glfwPollEvents();
+		}
+	}
+
+	return;
+}
+
+
 int main( int argc, char* argv[] )
 {
+	/*=============================================================
+	GLFW3 Code
+	=============================================================*/
+	//Initializing GLFW Library
+	glfwInit();
+
+	//Telling GLWF what versionf of OpenGL we are using
+	//We are using 3.3
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+	//Telling GLFW we will be using Core profile of OpenGL
+	//The other option is compatibility profile, but we won't use that
+	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+
+	//Creating Window
+	GLFWwindow* window = glfwCreateWindow(WIDTH, HEIGHT, "Some Window", NULL, NULL);
+	if (window == NULL) //Making sure our window was successfully created
+	{
+		std::cout << "Failed to create GLFW window" << endl;
+		glfwTerminate();
+
+		return -1;
+	}
+	//Telling the GLFW to put the created window in current context
+	//Important if we want it to be visible
+	glfwMakeContextCurrent(window);
+
+
+	//Initializing OpenGL using GLEW
+	if (glewInit() != GLEW_OK)
+	{
+		std::cout << "glewInit() Failed!\n";
+		exit(0);
+	}
+	else
+	{
+		std::cout << "OpenGL Version: " << glGetString(GL_VERSION) << endl << endl;
+	}
+
+	//Filling the window with black color
+	glClear(GL_COLOR_BUFFER_BIT);
+	/* Swap front and back buffers */
+	glfwSwapBuffers(window);
+
+
+	/*=============================================================
+	Ray Tracer Code
+	=============================================================*/
+
 	// Fill in your implementation here.
 	ArgParser args(argc, argv);
+
+	//Overriding the read width and height <----------- Check this Later Maybe
+	args.width = WIDTH;
+	args.height = HEIGHT;
 
 	//Initializing Output Image
 	Image outputImage(args.width, args.height);
@@ -45,7 +147,6 @@ int main( int argc, char* argv[] )
 
 	//Performance Benchmarking
 	auto start_time = high_resolution_clock::now();
-	
 		
 	// First, parse the scene using SceneParser.
 	SceneParser scene(args.input_file);
@@ -58,53 +159,49 @@ int main( int argc, char* argv[] )
 	RayTracer engine(&scene, &args);
 	if(args.jitter == 0)
 	{
-		//int i, j;
+		/*=============================================================
+		Ray Tracing without Super Sampling
+		=============================================================*/
 		#pragma omp parallel for schedule(dynamic)
 		for(register int i = 0 ; i < args.width ; ++i)
 		{
-			//printf("Iteration: %d\n", i);
 			#pragma omp parallel for schedule(dynamic)
 			for(register int j = 0 ; j < args.height ; ++j)
 			{
-				//printf("Iteration: %d, %d\n", i, j);
-				float x_point = 2.0f * float(j)/args.width -1.0f;
-				float y_point = 2.0f * float(i)/args.height -1.0f;
+				float x_point = 2.0f * float(i)/args.width -1.0f;
+				float y_point = 2.0f * float(j)/args.height -1.0f;
 				Vector2f point = Vector2f(x_point, y_point);
 
-				//printf("check1 %d, %d\n", i, j);
 				Ray currentRay = scene.getCamera()->generateRay(point);
 				Hit h;
 				h = Hit( FLT_MAX, NULL, Vector3f( 0, 0, 0 ) );
 
 
-				//printf("check2 %d, %d\n", i, j);
-				//cout << "Casting Ray!\n";
 				Matrix3f colors;
 
-				
+				//Calling the traceRay routing to get the color
 				colors = engine.traceRay(currentRay, 
 						scene.getCamera()->getTMin(), 0
 						, 1.0, h);
 				
 
-				//cout << "Color returned\n";
-				// outputImage.SetPixel(j, i, colors);
-				// depthImage.SetPixel(j, i, colors);
-				// normalImage.SetPixel(j, i, colors);
+				//Saving the output in the image objects
+				outputImage.SetPixel(i, j, colors.getCol(0));
+				depthImage.SetPixel(i, j, colors.getCol(1));
+				normalImage.SetPixel(i, j, colors.getCol(2));
 
-				//printf("check3 %d, %d\n", i, j);
-				outputImage.SetPixel(j, i, colors.getCol(0));
-				depthImage.SetPixel(j, i, colors.getCol(1));
-				normalImage.SetPixel(j, i, colors.getCol(2));
 
-				//printf("Done: %d, %d\n", i, j);
-
-				//cout << "Color Set!\n";
+				//Handling events like resize, close or move
+				//Important, if skipped will cause the window to become not responding
+				glfwPollEvents();
 			}
 		}
 	}
 	else
 	{
+		/*=============================================================
+		Ray Tracing with Super Sampling
+		=============================================================*/
 		int superWidth = args.width*SUPERSAMPLE_X;
 		int superHeight = args.height*SUPERSAMPLE_X;
 
@@ -113,7 +210,6 @@ int main( int argc, char* argv[] )
 		Image superNormal(superWidth, superHeight);
 
 		//Supersampling
-		//int i, j;
 		#pragma omp parallel for schedule(dynamic)
 		for(register int i = 0 ; i < superWidth ; ++i)
 		{
@@ -131,27 +227,23 @@ int main( int argc, char* argv[] )
 				Hit h;
 				h = Hit( FLT_MAX, NULL, Vector3f( 0, 0, 0 ) );
 
-
-				//cout << "Casting Ray!\n";
-
 				Matrix3f colors = engine.traceRay(currentRay, 
 							scene.getCamera()->getTMin(), 0
 							, 1.0, h);
-
-				//cout << "Color returned\n";
-				// outputImage.SetPixel(j, i, colors);
-				// depthImage.SetPixel(j, i, colors);
-				// normalImage.SetPixel(j, i, colors);
 
 				superOutput.SetPixel(j, i, colors.getCol(0));
 				superDepth.SetPixel(j, i, colors.getCol(1));
 				superNormal.SetPixel(j, i, colors.getCol(2));
 
-				//cout << "Color Set!\n";
+				//Handling events like resize, close or move
+				//Important, if skipped will cause the window to become not responding
+				glfwPollEvents();
 			}
 		}
 
-		//Gaussian Blur
+		/*=============================================================
+		Gaussian Blur
+		=============================================================*/
 		Image blur1(superWidth, superHeight);
 		Image blur2(superWidth, superHeight);
 		if(args.filter == 1)
@@ -181,6 +273,10 @@ int main( int argc, char* argv[] )
 					next += superOutput.GetPixel(j, i+2)*K[4];
 					
 					blur1.SetPixel(j, i, next);
+
+					//Handling events like resize, close or move
+					//Important, if skipped will cause the window to become not responding
+					glfwPollEvents();
 				}
 			}
 			//Vertical
@@ -207,13 +303,19 @@ int main( int argc, char* argv[] )
 					next += blur1.GetPixel(j, i+2)*K[4];
 					
 					blur2.SetPixel(j, i, next);
+
+					//Handling events like resize, close or move
+					//Important, if skipped will cause the window to become not responding
+					glfwPollEvents();
 				}
 			}
 		}
 		
 
 
-		//Downsampling
+		/*=============================================================
+		Down Sampling
+		=============================================================*/
 		#pragma omp parallel for schedule(dynamic)
 		for(register int i = 0 ; i < args.width ; ++i)
 		{
@@ -250,16 +352,57 @@ int main( int argc, char* argv[] )
 				outputImage.SetPixel(j, i, tempColor/9.0f);
 				depthImage.SetPixel(j, i, tempColor2/9.0f);
 				normalImage.SetPixel(j, i, tempColor3/9.0f);
+
+
+				//Handling events like resize, close or move
+				//Important, if skipped will cause the window to become not responding
+				glfwPollEvents();
 			}
 		}
 	}
 
-	//Performance Benchmarking
+	/*=============================================================
+	Displaying the Image on Window
+	=============================================================*/
+	updateGLWindow(window, outputImage);
+
+
+
+	/*=============================================================
+	Performance Benchmarking
+	=============================================================*/
 	auto stop_time = high_resolution_clock::now();
 	auto duration = duration_cast<milliseconds>(stop_time - start_time);
 
-	cout << "Render Time: " << (duration.count()/1000.0f) << " seconds" << endl;
+	std::cout << "Render Time: " << (duration.count()/1000.0f) << " seconds" << endl;
 
+
+
+	/*=============================================================
+	Making the Window Responsive and wait for input
+	=============================================================*/
+	//Main while loop that keeps the code running
+	while (!glfwWindowShouldClose(window))
+	{
+		//Handling events like resize, close or move
+		//Important, if skipped will cause the window to become not responding
+		glfwPollEvents();
+	}
+
+
+	/*=============================================================
+	GLFW Terminating Window
+	=============================================================*/
+	//Deleting the window we created because we don't need it now
+	glfwDestroyWindow(window);
+	//Terminating the GLFW library
+	glfwTerminate();
+
+
+
+	/*=============================================================
+	Exporting Outputs
+	=============================================================*/
 	//Saving Output Image
 	if(args.output_file != nullptr)
 	{
@@ -280,6 +423,11 @@ int main( int argc, char* argv[] )
 	}
 	std::cout << "-----------------------------------\n";
 
+
+
+	/*=============================================================
+	Code Ending
+	=============================================================*/
 	return 0;
 }
 

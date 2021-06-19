@@ -1,8 +1,13 @@
-﻿  RayTracer.cpp
-E:\3d Workspace\distrib\RayTracer.cpp(90,7): warning C4305: 'argument': truncation from 'double' to 'float'
-E:\3d Workspace\distrib\RayTracer.cpp(151,89): warning C4305: 'argument': truncation from 'double' to 'float'
-E:\3d Workspace\distrib\RayTracer.cpp(193,27): warning C4305: 'argument': truncation from 'double' to 'float'
-E:\3d Workspace\distrib\RayTracer.cpp(215,13): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-E:\3d Workspace\distrib\RayTracer.cpp(217,12): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+﻿  main.cpp
 LINK : warning LNK4075: ignoring '/INCREMENTAL' due to '/OPT:ICF' specification
-  a4.vcxproj -> E:\3d Workspace\distrib\Release\a4.exe
+main.obj : error LNK2019: unresolved external symbol _glfwInit referenced in function _main
+main.obj : error LNK2019: unresolved external symbol _glfwTerminate referenced in function _main
+main.obj : error LNK2019: unresolved external symbol _glfwWindowHint referenced in function _main
+main.obj : error LNK2019: unresolved external symbol _glfwCreateWindow referenced in function _main
+main.obj : error LNK2019: unresolved external symbol _glfwDestroyWindow referenced in function _main
+main.obj : error LNK2019: unresolved external symbol _glfwWindowShouldClose referenced in function _main
+main.obj : error LNK2019: unresolved external symbol _glfwPollEvents referenced in function _main
+main.obj : error LNK2019: unresolved external symbol _glfwMakeContextCurrent referenced in function _main
+main.obj : error LNK2019: unresolved external symbol _glfwSwapBuffers referenced in function _main
+E:\3d Workspace\distrib\Libraries\lib\glfw3.lib : warning LNK4272: library machine type 'x64' conflicts with target machine type 'x86'
+E:\3d Workspace\distrib\Release\a4.exe : fatal error LNK1120: 9 unresolved externals

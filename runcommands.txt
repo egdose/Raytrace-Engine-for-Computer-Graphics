@@ -1,0 +1,4 @@
+-input scene01_plane.txt  -size 1200 1200 -output 1.bmp -shadows -bounces 3 -depth 0 10 1z_depth.bmp -normals 1z_normal.bmp
+
+-input scene10_sphere.txt  -size 1200 1200 -output 10.bmp -shadows -bounces 3 -depth 0 10 10z_depth.bmp -normals 10z_normal.bmp
+-input scene10_sphere.txt  -size 1200 1200 -output 10.bmp -jitter -filter -shadows -bounces 3 -depth 0 10 10z_depth.bmp -normals 10z_normal.bmp

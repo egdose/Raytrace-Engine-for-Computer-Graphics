@@ -11,6 +11,14 @@ e:\3d workspace\distrib\release\mesh.obj
 e:\3d workspace\distrib\release\main.obj
 e:\3d workspace\distrib\release\image.obj
 e:\3d workspace\distrib\release\sceneparser.obj
+e:\3d workspace\distrib\release\raytracer.obj
+e:\3d workspace\distrib\release\perlinnoise.obj
+e:\3d workspace\distrib\release\octree.obj
+e:\3d workspace\distrib\release\noise.obj
+e:\3d workspace\distrib\release\material.obj
+e:\3d workspace\distrib\release\cubemap.obj
+e:\3d workspace\distrib\release\camera.obj
+e:\3d workspace\distrib\release\glad.obj
 e:\3d workspace\distrib\release\a4.exe
 e:\3d workspace\distrib\release\a4.pdb
 e:\3d workspace\distrib\release\a4.tlog\cl.command.1.tlog

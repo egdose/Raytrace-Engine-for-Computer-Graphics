@@ -45,7 +45,7 @@ public:
         // direction of the directional light source
         dir = -direction;
         col = color;
-		  distanceToLight = FLT_MAX; 
+        distanceToLight = FLT_MAX; 
     }
 
 private:
