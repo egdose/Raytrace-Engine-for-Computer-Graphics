@@ -1,0 +1,1 @@
+./a5 -input scene_custom.txt  -size 400 400 -output 0.bmp -shadows -bounces 3 -depth 0 10 0z_depth.bmp -normals 0z_normal.bmp
