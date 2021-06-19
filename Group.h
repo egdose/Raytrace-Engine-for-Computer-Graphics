@@ -34,8 +34,8 @@ public:
 	virtual bool intersect( const Ray& r , Hit& h , float tmin ) {
 		bool ret = false;
 		
-		#pragma omp critical
-		{
+		//#pragma omp critical
+		//{
 			for (register int i = 0 ; i < size ; ++ i)
 			{
 				if(collection[i] != nullptr)
@@ -47,7 +47,7 @@ public:
 					}
 				}
 			}
-		}
+		//}
 		
 
 		return ret;
@@ -55,8 +55,8 @@ public:
 
 	bool intersectShadowRay( const Ray& r , Hit& h , float tmin ) {
 		bool toReturn = false;
-		#pragma omp critical
-		{
+		//#pragma omp critical
+		//{
 			for (register int i = 0 ; i < size ; ++ i)
 			{
 				if(collection[i] != nullptr)
@@ -68,7 +68,7 @@ public:
 					}
 				}
 			}
-		}
+		//}
 		
 
 		return toReturn;

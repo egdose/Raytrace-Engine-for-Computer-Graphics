@@ -1,0 +1,3 @@
+﻿  main.cpp
+LINK : warning LNK4075: ignoring '/INCREMENTAL' due to '/OPT:ICF' specification
+  a4.vcxproj -> E:\3d Workspace\distrib\Release\a4.exe

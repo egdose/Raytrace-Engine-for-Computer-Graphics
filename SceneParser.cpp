@@ -2,7 +2,7 @@
 #include <cstring>
 #include <cstdlib>
 #define _USE_MATH_DEFINES
-#include <cmath>
+#include <math.h>
 
 #include "SceneParser.h"
 #include "Camera.h" 

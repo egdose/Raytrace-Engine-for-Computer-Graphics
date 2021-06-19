@@ -11,12 +11,16 @@
 void intersectCall(int idx, void ** arg)
 {
 	Mesh * m = (Mesh*)(arg[0]);
+	if (m == nullptr)
+	{
+		return;
+	}
 	bool result = m->intersectTrig(idx);
 	arg[1] = (void*)(((bool)arg[1])|result);
 }
 bool Mesh::intersect( const Ray& r , Hit& h , float tmin )
 {
-/*	bool result = false;
+	bool result = false;
 	for( unsigned int i = 0 ; i < t.size() ; i++){
 		Triangle triangle(v[t[i][0]],
 			v[t[i][1]],v[t[i][2]],material);
@@ -33,17 +37,20 @@ bool Mesh::intersect( const Ray& r , Hit& h , float tmin )
 		result |= triangle.intersect( r , h , tmin);
 	}
 	return result;
-	*/
+	/*
 	ray = &r;
 	hit = &h;
 	tm = tmin;
 	void * arg[2];
 	arg[0] = this;
 	arg[1] = 0;
-	octree.arg = arg;
-	octree.termFunc = intersectCall;
-	octree.intersect(r);
+	Octree tempOctree;
+	tempOctree.build(*this);
+	tempOctree.arg = arg;
+	tempOctree.termFunc = intersectCall;
+	tempOctree.intersect(r);
 	return arg[1];
+	*/
 }
 bool Mesh ::intersectTrig(int idx){
 	bool result = false;

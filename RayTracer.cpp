@@ -96,10 +96,6 @@ Matrix3f RayTracer::traceRay( Ray& currentRay, float tmin, int bounces,
 			}
 		}
 		
-		//cout << "Calculating pixel color\n";
-		// ambientLight.print();
-		// Ka.print();
-		// diffShading.print();
 		pixelColor = ambientLight*Ka + diffShading;
 		
 
@@ -218,30 +214,9 @@ Matrix3f RayTracer::traceRay( Ray& currentRay, float tmin, int bounces,
 
 			float Ro = pow((nt-n)/(nt+n), 2);
 
-			float R = Ro + (1-Ro) * pow(1-c, 5);
-
-			//cout << "R: " << R << endl;
+			float R = Ro + (1.0f-Ro) * pow(1-c, 5);
 
 			pixelColor += + (1-R)*refractedColor + (R)*reflectedColor;
-
-			// if(R >= 0 && R <= 1)
-			// {
-			// 	//ADDING REFLECTION COLOR
-			// 	pixelColor += (R)*(reflectedColor);
-
-			// 	//ADDING REFRACTION COLOR
-			// 	pixelColor += (1-R)*(refractedColor);
-			// }
-			// else if(R>1)
-			// {
-			// 	//ADDING REFLECTION COLOR
-			// 	pixelColor += (reflectedColor);
-			// }
-			// else
-			// {
-			// 	//ADDING REFRACTION COLOR
-			// 	pixelColor += (refractedColor);
-			// }
 		}
 		else
 		{

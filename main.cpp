@@ -12,10 +12,14 @@
 #include "ArgParser.h"
 #include "RayTracer.h"
 #include <string.h>
+#include <chrono>
 
 using namespace std;
 
+using namespace std::chrono;
+
 #define SUPERSAMPLE_X 3
+#define NUM_THREADS 12
 
 float clampedDepth ( float depthInput, float depthMin , float depthMax);
 
@@ -35,7 +39,12 @@ int main( int argc, char* argv[] )
 	Image normalImage(args.width, args.height);
 
 	//Multithreading
-	omp_set_num_threads(8);
+	omp_set_num_threads(NUM_THREADS);
+	if(NUM_THREADS > 1)
+		printf("Multithreading Enabled: %d Threads\n", NUM_THREADS);
+
+	//Performance Benchmarking
+	auto start_time = high_resolution_clock::now();
 	
 		
 	// First, parse the scene using SceneParser.
@@ -49,11 +58,13 @@ int main( int argc, char* argv[] )
 	RayTracer engine(&scene, &args);
 	if(args.jitter == 0)
 	{
-		int i, j;
-		for(i = 0 ; i < args.width ; ++i)
+		//int i, j;
+		#pragma omp parallel for schedule(dynamic)
+		for(register int i = 0 ; i < args.width ; ++i)
 		{
 			//printf("Iteration: %d\n", i);
-			for(j = 0 ; j < args.height ; ++j)
+			#pragma omp parallel for schedule(dynamic)
+			for(register int j = 0 ; j < args.height ; ++j)
 			{
 				//printf("Iteration: %d, %d\n", i, j);
 				float x_point = 2.0f * float(j)/args.width -1.0f;
@@ -102,10 +113,12 @@ int main( int argc, char* argv[] )
 		Image superNormal(superWidth, superHeight);
 
 		//Supersampling
-		int i, j;
-		for(i = 0 ; i < superWidth ; ++i)
+		//int i, j;
+		#pragma omp parallel for schedule(dynamic)
+		for(register int i = 0 ; i < superWidth ; ++i)
 		{
-			for(j = 0 ; j < superHeight ; ++j)
+			#pragma omp parallel for schedule(dynamic)
+			for(register int j = 0 ; j < superHeight ; ++j)
 			{
 				float r_i = (float)rand()/(float)RAND_MAX - 0.5f;
 				float r_j = (float)rand()/(float)RAND_MAX - 0.5f;
@@ -145,12 +158,14 @@ int main( int argc, char* argv[] )
 		{
 			float K[5] = {0.1201f, 0.2339f, 0.2931f, 0.2339f, 0.1201f};
 			//Horizontal
+			#pragma omp parallel for schedule(dynamic)
 			for(register int i = 0 ; i < superWidth ; ++i)
 			{
 				if(i == 0 || i == 1 || i == superWidth-2 || i == superHeight-1)
 				{
 					continue;
 				}
+				#pragma omp parallel for schedule(dynamic)
 				for(register int j = 0 ; j < superHeight ; ++j)
 				{
 					if(j == 0 || j == 1 || j == superHeight-2 || j == superHeight-1)
@@ -169,12 +184,14 @@ int main( int argc, char* argv[] )
 				}
 			}
 			//Vertical
+			#pragma omp parallel for schedule(dynamic)
 			for(register int i = 0 ; i < superWidth ; ++i)
 			{
 				if(i == 0 || i == 1 || i == superWidth-2 || i == superHeight-1)
 				{
 					continue;
 				}
+				#pragma omp parallel for schedule(dynamic)
 				for(register int j = 0 ; j < superHeight ; ++j)
 				{
 					if(j == 0 || j == 1 || j == superHeight-2 || j == superHeight-1)
@@ -197,8 +214,10 @@ int main( int argc, char* argv[] )
 
 
 		//Downsampling
+		#pragma omp parallel for schedule(dynamic)
 		for(register int i = 0 ; i < args.width ; ++i)
 		{
+			#pragma omp parallel for schedule(dynamic)
 			for(register int j = 0 ; j < args.height ; ++j)
 			{
 				Vector3f tempColor(0.0f);
@@ -233,7 +252,13 @@ int main( int argc, char* argv[] )
 				normalImage.SetPixel(j, i, tempColor3/9.0f);
 			}
 		}
-	}	
+	}
+
+	//Performance Benchmarking
+	auto stop_time = high_resolution_clock::now();
+	auto duration = duration_cast<milliseconds>(stop_time - start_time);
+
+	cout << "Render Time: " << (duration.count()/1000.0f) << " seconds" << endl;
 
 	//Saving Output Image
 	if(args.output_file != nullptr)
