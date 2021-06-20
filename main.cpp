@@ -25,8 +25,8 @@ using namespace std::chrono;
 #define SUPERSAMPLE_X 3
 #define NUM_THREADS 12
 
-constexpr auto WIDTH = 600;
-constexpr auto HEIGHT = 600;
+constexpr auto WIDTH = 2000;
+constexpr auto HEIGHT = 2000;
 
 float clampedDepth ( float depthInput, float depthMin , float depthMax);
 
@@ -77,6 +77,7 @@ int main( int argc, char* argv[] )
 	/*=============================================================
 	GLFW3 Code
 	=============================================================*/
+	/*
 	//Initializing GLFW Library
 	glfwInit();
 
@@ -116,8 +117,8 @@ int main( int argc, char* argv[] )
 
 	//Filling the window with black color
 	glClear(GL_COLOR_BUFFER_BIT);
-	/* Swap front and back buffers */
 	glfwSwapBuffers(window);
+	*/
 
 
 	/*=============================================================
@@ -193,7 +194,7 @@ int main( int argc, char* argv[] )
 
 				//Handling events like resize, close or move
 				//Important, if skipped will cause the window to become not responding
-				glfwPollEvents();
+				//glfwPollEvents();
 			}
 		}
 	}
@@ -237,7 +238,7 @@ int main( int argc, char* argv[] )
 
 				//Handling events like resize, close or move
 				//Important, if skipped will cause the window to become not responding
-				glfwPollEvents();
+				//glfwPollEvents();
 			}
 		}
 
@@ -276,7 +277,7 @@ int main( int argc, char* argv[] )
 
 					//Handling events like resize, close or move
 					//Important, if skipped will cause the window to become not responding
-					glfwPollEvents();
+					//glfwPollEvents();
 				}
 			}
 			//Vertical
@@ -306,7 +307,7 @@ int main( int argc, char* argv[] )
 
 					//Handling events like resize, close or move
 					//Important, if skipped will cause the window to become not responding
-					glfwPollEvents();
+					//glfwPollEvents();
 				}
 			}
 		}
@@ -356,7 +357,7 @@ int main( int argc, char* argv[] )
 
 				//Handling events like resize, close or move
 				//Important, if skipped will cause the window to become not responding
-				glfwPollEvents();
+				//glfwPollEvents();
 			}
 		}
 	}
@@ -364,7 +365,7 @@ int main( int argc, char* argv[] )
 	/*=============================================================
 	Displaying the Image on Window
 	=============================================================*/
-	updateGLWindow(window, outputImage);
+	//updateGLWindow(window, outputImage);
 
 
 
@@ -380,7 +381,7 @@ int main( int argc, char* argv[] )
 
 	/*=============================================================
 	Making the Window Responsive and wait for input
-	=============================================================*/
+	=============================================================
 	//Main while loop that keeps the code running
 	while (!glfwWindowShouldClose(window))
 	{
@@ -388,16 +389,17 @@ int main( int argc, char* argv[] )
 		//Important, if skipped will cause the window to become not responding
 		glfwPollEvents();
 	}
+	*/
 
 
 	/*=============================================================
 	GLFW Terminating Window
-	=============================================================*/
+	=============================================================
 	//Deleting the window we created because we don't need it now
 	glfwDestroyWindow(window);
 	//Terminating the GLFW library
 	glfwTerminate();
-
+	*/
 
 
 	/*=============================================================
