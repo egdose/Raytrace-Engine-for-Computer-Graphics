@@ -6,7 +6,7 @@ PerspectiveCamera {
     angle 30
     focus 15
     fstop 1.0
-    samples 16
+    samples 4
 }
 
 Lights {

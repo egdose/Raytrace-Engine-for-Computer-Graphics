@@ -164,7 +164,6 @@ Matrix3f RayTracer::traceRay( Ray& currentRay, float tmin, int bounces,
 							softShadow += hit.getMaterial()->Shade(currentRay, hit, offsetDirectionZ, lightColor);
 						}
 					}
-
 					//3 Rays per sample, x offset, y offset, z offset
 					for (register int i = 0; i < samples; ++i)
 					{

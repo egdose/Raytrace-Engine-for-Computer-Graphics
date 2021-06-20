@@ -13,7 +13,7 @@ class Material
 public:
 	
 	Material( const Vector3f& d_color ,const Vector3f& s_color=Vector3f::ZERO, float s=0,
-		float r =0 );
+		float r =0, int rough = 0 );
 
 		virtual ~Material();
 
@@ -29,6 +29,7 @@ public:
 	float clampedDot( const Vector3f& L , const Vector3f& N )const;
 	void loadTexture(const char * filename);
 	float getRefractionIndex();
+	int getRoughness()const;
 	Vector3f getDiffuseColor();
 	Vector3f getSpecularColor();
 
@@ -40,6 +41,7 @@ protected:
 	Vector3f specularColor;
 	Texture t;
 	Noise noise;
+	int roughness;
 };
 
 #endif // MATERIAL_H

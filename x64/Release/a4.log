@@ -1,50 +1,56 @@
-﻿  Camera.cpp
+﻿  Material.cpp
+  Mesh.cpp
+E:\3d Workspace\distrib\Mesh.cpp(19,41): warning C4312: 'type cast': conversion from 'int' to 'void *' of greater size
   RayTracer.cpp
 E:\3d Workspace\distrib\RayTracer.cpp(94,9): warning C4305: 'argument': truncation from 'double' to 'float'
 E:\3d Workspace\distrib\RayTracer.cpp(129,10): warning C4305: 'argument': truncation from 'double' to 'float'
 E:\3d Workspace\distrib\RayTracer.cpp(148,10): warning C4305: 'argument': truncation from 'double' to 'float'
 E:\3d Workspace\distrib\RayTracer.cpp(158,10): warning C4305: 'argument': truncation from 'double' to 'float'
-E:\3d Workspace\distrib\RayTracer.cpp(189,10): warning C4305: 'argument': truncation from 'double' to 'float'
-E:\3d Workspace\distrib\RayTracer.cpp(208,10): warning C4305: 'argument': truncation from 'double' to 'float'
-E:\3d Workspace\distrib\RayTracer.cpp(218,10): warning C4305: 'argument': truncation from 'double' to 'float'
-E:\3d Workspace\distrib\RayTracer.cpp(229,27): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-E:\3d Workspace\distrib\RayTracer.cpp(233,34): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-E:\3d Workspace\distrib\RayTracer.cpp(296,89): warning C4305: 'argument': truncation from 'double' to 'float'
-E:\3d Workspace\distrib\RayTracer.cpp(338,27): warning C4305: 'argument': truncation from 'double' to 'float'
-E:\3d Workspace\distrib\RayTracer.cpp(360,13): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-E:\3d Workspace\distrib\RayTracer.cpp(362,12): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+E:\3d Workspace\distrib\RayTracer.cpp(188,10): warning C4305: 'argument': truncation from 'double' to 'float'
+E:\3d Workspace\distrib\RayTracer.cpp(207,10): warning C4305: 'argument': truncation from 'double' to 'float'
+E:\3d Workspace\distrib\RayTracer.cpp(217,10): warning C4305: 'argument': truncation from 'double' to 'float'
+E:\3d Workspace\distrib\RayTracer.cpp(228,27): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+E:\3d Workspace\distrib\RayTracer.cpp(232,34): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+E:\3d Workspace\distrib\RayTracer.cpp(295,89): warning C4305: 'argument': truncation from 'double' to 'float'
+E:\3d Workspace\distrib\RayTracer.cpp(337,27): warning C4305: 'argument': truncation from 'double' to 'float'
+E:\3d Workspace\distrib\RayTracer.cpp(359,13): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+E:\3d Workspace\distrib\RayTracer.cpp(361,12): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
   SceneParser.cpp
 E:\3d Workspace\distrib\SceneParser.cpp(42,12): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
 E:\3d Workspace\distrib\SceneParser.cpp(117,25): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-E:\3d Workspace\distrib\SceneParser.cpp(500,49): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-E:\3d Workspace\distrib\SceneParser.cpp(502,49): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
 E:\3d Workspace\distrib\SceneParser.cpp(504,49): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-E:\3d Workspace\distrib\SceneParser.cpp(509,27): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-E:\3d Workspace\distrib\SceneParser.cpp(543,19): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-E:\3d Workspace\distrib\SceneParser.cpp(554,17): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-E:\3d Workspace\distrib\SceneParser.cpp(565,17): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-E:\3d Workspace\distrib\SceneParser.cpp(576,17): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-E:\3d Workspace\distrib\SceneParser.cpp(587,17): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+E:\3d Workspace\distrib\SceneParser.cpp(506,49): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+E:\3d Workspace\distrib\SceneParser.cpp(508,49): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+E:\3d Workspace\distrib\SceneParser.cpp(513,27): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+E:\3d Workspace\distrib\SceneParser.cpp(547,19): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+E:\3d Workspace\distrib\SceneParser.cpp(558,17): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+E:\3d Workspace\distrib\SceneParser.cpp(569,17): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+E:\3d Workspace\distrib\SceneParser.cpp(580,17): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+E:\3d Workspace\distrib\SceneParser.cpp(591,17): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
   main.cpp
 E:\3d Workspace\distrib\main.cpp(141,12): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-E:\3d Workspace\distrib\main.cpp(247,18): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-E:\3d Workspace\distrib\main.cpp(352,18): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-E:\3d Workspace\distrib\main.cpp(558,3): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-E:\3d Workspace\distrib\main.cpp(564,4): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-E:\3d Workspace\distrib\main.cpp(571,4): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-E:\3d Workspace\distrib\main.cpp(578,4): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+E:\3d Workspace\distrib\main.cpp(251,18): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+E:\3d Workspace\distrib\main.cpp(360,18): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+E:\3d Workspace\distrib\main.cpp(569,3): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+E:\3d Workspace\distrib\main.cpp(575,4): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+E:\3d Workspace\distrib\main.cpp(582,4): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+E:\3d Workspace\distrib\main.cpp(589,4): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  octree.cpp
+E:\3d Workspace\distrib\octree.cpp(179,10): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+E:\3d Workspace\distrib\octree.cpp(180,10): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+E:\3d Workspace\distrib\octree.cpp(181,10): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
   Generating Code...
 LINK : warning LNK4075: ignoring '/INCREMENTAL' due to '/OPT:ICF' specification
 LINK : warning LNK4098: defaultlib 'MSVCRTD' conflicts with use of other libs; use /NODEFAULTLIB:library
 glfw3.lib(context.obj) : warning LNK4099: PDB 'glfw3.pdb' was not found with 'glfw3.lib(context.obj)' or at 'E:\3d Workspace\distrib\x64\Release\glfw3.pdb'; linking object as if no debug info
 glfw3.lib(init.obj) : warning LNK4099: PDB 'glfw3.pdb' was not found with 'glfw3.lib(init.obj)' or at 'E:\3d Workspace\distrib\x64\Release\glfw3.pdb'; linking object as if no debug info
-glfw3.lib(input.obj) : warning LNK4099: PDB 'glfw3.pdb' was not found with 'glfw3.lib(input.obj)' or at 'E:\3d Workspace\distrib\x64\Release\glfw3.pdb'; linking object as if no debug info
+glfw3.lib(input.obj) : warning LNK4099: PDB '' was not found with 'glfw3.lib(input.obj)' or at ''; linking object as if no debug info
 glfw3.lib(monitor.obj) : warning LNK4099: PDB 'glfw3.pdb' was not found with 'glfw3.lib(monitor.obj)' or at 'E:\3d Workspace\distrib\x64\Release\glfw3.pdb'; linking object as if no debug info
-glfw3.lib(vulkan.obj) : warning LNK4099: PDB '' was not found with 'glfw3.lib(vulkan.obj)' or at ''; linking object as if no debug info
-glfw3.lib(window.obj) : warning LNK4099: PDB '' was not found with 'glfw3.lib(window.obj)' or at ''; linking object as if no debug info
+glfw3.lib(vulkan.obj) : warning LNK4099: PDB 'glfw3.pdb' was not found with 'glfw3.lib(vulkan.obj)' or at 'E:\3d Workspace\distrib\x64\Release\glfw3.pdb'; linking object as if no debug info
+glfw3.lib(window.obj) : warning LNK4099: PDB 'glfw3.pdb' was not found with 'glfw3.lib(window.obj)' or at 'E:\3d Workspace\distrib\x64\Release\glfw3.pdb'; linking object as if no debug info
 glfw3.lib(win32_init.obj) : warning LNK4099: PDB 'glfw3.pdb' was not found with 'glfw3.lib(win32_init.obj)' or at 'E:\3d Workspace\distrib\x64\Release\glfw3.pdb'; linking object as if no debug info
-glfw3.lib(win32_joystick.obj) : warning LNK4099: PDB 'glfw3.pdb' was not found with 'glfw3.lib(win32_joystick.obj)' or at 'E:\3d Workspace\distrib\x64\Release\glfw3.pdb'; linking object as if no debug info
-glfw3.lib(win32_monitor.obj) : warning LNK4099: PDB 'glfw3.pdb' was not found with 'glfw3.lib(win32_monitor.obj)' or at 'E:\3d Workspace\distrib\x64\Release\glfw3.pdb'; linking object as if no debug info
+glfw3.lib(win32_joystick.obj) : warning LNK4099: PDB '' was not found with 'glfw3.lib(win32_joystick.obj)' or at ''; linking object as if no debug info
+glfw3.lib(win32_monitor.obj) : warning LNK4099: PDB '' was not found with 'glfw3.lib(win32_monitor.obj)' or at ''; linking object as if no debug info
 glfw3.lib(win32_time.obj) : warning LNK4099: PDB 'glfw3.pdb' was not found with 'glfw3.lib(win32_time.obj)' or at 'E:\3d Workspace\distrib\x64\Release\glfw3.pdb'; linking object as if no debug info
 glfw3.lib(win32_thread.obj) : warning LNK4099: PDB '' was not found with 'glfw3.lib(win32_thread.obj)' or at ''; linking object as if no debug info
 glfw3.lib(win32_window.obj) : warning LNK4099: PDB 'glfw3.pdb' was not found with 'glfw3.lib(win32_window.obj)' or at 'E:\3d Workspace\distrib\x64\Release\glfw3.pdb'; linking object as if no debug info

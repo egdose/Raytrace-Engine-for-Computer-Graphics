@@ -9,11 +9,11 @@
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <LocalDebuggerCommandArguments>-input scene_custom.txt  -size 1200 1200 -jitter -filter -output 0.bmp -shadows -bounces 3 -depth 0 10 0z_depth.bmp -normals 0z_normal.bmp</LocalDebuggerCommandArguments>
+    <LocalDebuggerCommandArguments>-input scene_custom3.txt  -size 1200 1200 -output Custom3.bmp -shadows -bounces 3 -depth 0 20 Custom3z_depth.bmp -normals Custom3z_normal.bmp</LocalDebuggerCommandArguments>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <LocalDebuggerCommandArguments>-input scene_custom.txt  -size 1200 1200 -jitter -filter -output 0.bmp -shadows -bounces 3 -depth 0 10 0z_depth.bmp -normals 0z_normal.bmp</LocalDebuggerCommandArguments>
+    <LocalDebuggerCommandArguments>-input scene_custom3.txt  -size 1200 1200 -output Custom3.bmp -shadows -bounces 3 -depth 0 20 Custom3z_depth.bmp -normals Custom3z_normal.bmp</LocalDebuggerCommandArguments>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
   </PropertyGroup>
 </Project>

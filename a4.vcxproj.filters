@@ -229,5 +229,8 @@
     <Text Include="scene_custom2.txt">
       <Filter>Source Files\Scenes</Filter>
     </Text>
+    <Text Include="scene_custom3.txt">
+      <Filter>Source Files\Scenes</Filter>
+    </Text>
   </ItemGroup>
 </Project>

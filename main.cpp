@@ -135,7 +135,7 @@ int main( int argc, char* argv[] )
 	args.height = HEIGHT;
 
 	//Overriding the depth of field <----------- Check this Later Maybe
-	args.depth_of_field = 1;
+	args.depth_of_field = 0;
 
 	//Setting up Random Seed
 	srand(time(0));
@@ -177,11 +177,15 @@ int main( int argc, char* argv[] )
 	std::cout << "-----------------------------------\n";
 	std::cout << "Preparing: " << args.input_file << endl;
 	RayTracer engine(&scene, &args);
+
 	if(args.jitter == 0)
 	{
+
 		/*=============================================================
 		Ray Tracing without Super Sampling
 		=============================================================*/
+		printf("Rendering Image\n");
+
 		#pragma omp parallel for schedule(dynamic)
 		for(register int i = 0 ; i < args.width ; ++i)
 		{
@@ -264,18 +268,22 @@ int main( int argc, char* argv[] )
 				depthImage.SetPixel(i, j, colors.getCol(1));
 				normalImage.SetPixel(i, j, colors.getCol(2));
 
-
 				//Handling events like resize, close or move
 				//Important, if skipped will cause the window to become not responding
 				//glfwPollEvents();
 			}
 		}
+
+		std::cout << endl;
 	}
 	else
 	{
+
 		/*=============================================================
 		Ray Tracing with Super Sampling
 		=============================================================*/
+		printf("Rendering Supersampled Image\n");
+
 		int superWidth = args.width*SUPERSAMPLE_X;
 		int superHeight = args.height*SUPERSAMPLE_X;
 
@@ -370,6 +378,7 @@ int main( int argc, char* argv[] )
 				//glfwPollEvents();
 			}
 		}
+		std::cout << endl;
 
 		/*=============================================================
 		Gaussian Blur
@@ -378,6 +387,7 @@ int main( int argc, char* argv[] )
 		Image blur2(superWidth, superHeight);
 		if(args.filter == 1)
 		{
+			printf("Applying Gaussian Blur\n");
 			float K[5] = {0.1201f, 0.2339f, 0.2931f, 0.2339f, 0.1201f};
 			//Horizontal
 			#pragma omp parallel for schedule(dynamic)
@@ -446,6 +456,7 @@ int main( int argc, char* argv[] )
 		/*=============================================================
 		Down Sampling
 		=============================================================*/
+		printf("Down Sampling\n");
 		#pragma omp parallel for schedule(dynamic)
 		for(register int i = 0 ; i < args.width ; ++i)
 		{

@@ -271,6 +271,7 @@ Material* SceneParser::parseMaterial() {
     Vector3f diffuseColor(1,1,1), specularColor(0,0,0);
 	float shininess=0;
 	float refractionIndex =0;
+    int roughness = 0;
     getToken(token); assert (!strcmp(token, "{"));
 	Noise *noise =0;
     while (1) {
@@ -289,6 +290,9 @@ Material* SceneParser::parseMaterial() {
 		else if (strcmp(token, "texture")==0) {
             getToken(filename);
         }
+        else if (strcmp(token, "roughness") == 0) {
+            roughness = readInt();
+        }
 		///unimplemented
 		else if (strcmp(token, "bump")==0) {
             getToken(token);
@@ -301,7 +305,7 @@ Material* SceneParser::parseMaterial() {
             break;
         }
     }
-    Material *answer = new Material(diffuseColor, specularColor, shininess,refractionIndex);
+    Material *answer = new Material(diffuseColor, specularColor, shininess,refractionIndex, roughness);
 	if(filename[0] !=0){
 		answer->loadTexture(filename);
 	}

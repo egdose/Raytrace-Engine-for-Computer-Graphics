@@ -211,6 +211,7 @@
     <Text Include="scene13_diamond.txt" />
     <Text Include="scene_custom.txt" />
     <Text Include="scene_custom2.txt" />
+    <Text Include="scene_custom3.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
