@@ -292,8 +292,57 @@ Matrix3f RayTracer::traceRay( Ray& currentRay, float tmin, int bounces,
 		Ray Reflected(intersectionPoint, mirrorDirection(hit.getNormal().normalized(), currentRay.getDirection()));
 		Hit recursiveHit;
 
-		Matrix3f Reflection = traceRay(Reflected, EPSILON, bounces+1, refr_index, recursiveHit);
 		Material* current = hit.getMaterial();
+		Matrix3f Reflection;
+		if(current->getRoughness() == 0)
+			Reflection = traceRay(Reflected, EPSILON, bounces+1, refr_index, recursiveHit);
+		else
+		{
+			float offsetValue = 1;
+
+			float LO = -offsetValue;
+			float HI = offsetValue;
+
+			int samples = current->getRoughness();
+
+			Vector3f rayOrigin = intersectionPoint;
+			Vector3f rayDirection = Reflected.getDirection();
+
+			Vector3f newColor(0.0f);
+
+			#pragma omp parallel for schedule(dynamic)
+			for (register int k = 0; k < samples; ++k)
+			{
+				float xOffset = LO + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / (HI - LO)));
+				float yOffset = LO + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / (HI - LO)));
+				float zOffset = LO + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / (HI - LO)));
+
+				//Generating New Ray
+				Vector3f newDirection = Vector3f(rayDirection[0]+xOffset, rayDirection[1]+yOffset, rayDirection[2]+zOffset);
+
+				Ray newRay(rayOrigin, newDirection);
+
+				//Generating new Hit
+				Hit newHit = Hit(FLT_MAX, NULL, Vector3f(0, 0, 0));
+
+				//Tracing the Ray
+				Matrix3f tempBuffer = traceRay(newRay,
+					EPSILON, bounces + 1, refr_index, newHit);
+
+				#pragma omp critical
+				{
+					//Getting Pixel Color
+					newColor += tempBuffer.getCol(0);
+				}
+			}
+
+			newColor = newColor / samples;
+
+			Reflection = Matrix3f(0.0f);
+			Reflection.setCol(0, newColor);
+		}
+
+
 		if(current != nullptr)
 			reflectedColor = Reflection.getCol(0)*current->getSpecularColor();
 		else

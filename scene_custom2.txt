@@ -5,8 +5,8 @@ PerspectiveCamera {
     up 0 1 0
     angle 30
     focus 20.6
-    fstop 1.0
-    samples 2
+    fstop 24.0
+    samples 16
 }
 
 Lights {
@@ -54,7 +54,7 @@ Materials {
 }
 
 Group {
-    numObjects 7
+    numObjects 10
     MaterialIndex 0
     Sphere {
 	center 0 0 0 
@@ -86,6 +86,21 @@ Group {
     MaterialIndex 4
     Sphere {
 	center 0.5 2.5 15 
+        radius 0.4 
+    }
+    MaterialIndex 4
+    Sphere {
+	center -0.8 1.25 12 
+        radius 0.4 
+    }
+    MaterialIndex 4
+    Sphere {
+	center -1 2.0 10 
+        radius 0.4 
+    }
+    MaterialIndex 4
+    Sphere {
+	center 2.0 2.5 7 
         radius 0.4 
     }
 }

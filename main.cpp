@@ -131,11 +131,11 @@ int main( int argc, char* argv[] )
 	ArgParser args(argc, argv);
 
 	//Overriding the read width and height <----------- Check this Later Maybe
-	args.width = WIDTH;
-	args.height = HEIGHT;
+	//args.width = WIDTH;
+	//args.height = HEIGHT;
 
 	//Overriding the depth of field <----------- Check this Later Maybe
-	args.depth_of_field = 0;
+	//args.depth_of_field = 1;
 
 	//Setting up Random Seed
 	srand(time(0));
@@ -566,7 +566,7 @@ int main( int argc, char* argv[] )
 		char buffer1[100];
 
 		//Adding Dimensions to output name
-		sprintf(buffer1, "_%dx%d", WIDTH, HEIGHT);
+		sprintf(buffer1, "_%dx%d", args.width, args.height);
 		outputLocation += buffer1;
 
 		if (args.jitter == 1)
