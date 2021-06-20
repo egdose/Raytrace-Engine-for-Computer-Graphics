@@ -134,6 +134,12 @@ int main( int argc, char* argv[] )
 	args.width = WIDTH;
 	args.height = HEIGHT;
 
+	//Overriding the depth of field <----------- Check this Later Maybe
+	args.depth_of_field = 1;
+
+	//Setting up Random Seed
+	srand(time(0));
+
 	//Initializing Output Image
 	Image outputImage(args.width, args.height);
 
@@ -145,6 +151,7 @@ int main( int argc, char* argv[] )
 
 	//Multithreading
 	omp_set_num_threads(NUM_THREADS);
+	std::cout << "-----------------------------------\n";
 	if(NUM_THREADS > 1)
 		printf("Multithreading Enabled: %d Threads\n", NUM_THREADS);
 
@@ -153,6 +160,16 @@ int main( int argc, char* argv[] )
 		
 	// First, parse the scene using SceneParser.
 	SceneParser scene(args.input_file);
+
+	std::cout << "-----------------------------------\n";
+	//Some Status printing
+	if (args.depth_of_field == 1)
+		std::cout << "Depth of Field Enabled!\n";
+	std::cout << "Focal Length: " << scene.getCamera()->getFocalLength() << endl;
+	std::cout << "F-Stop: " << scene.getCamera()->getFStop() << endl;
+	std::cout << "Aperture: " << 1/scene.getCamera()->getFStop() << endl;
+	std::cout << "Samples: " << scene.getCamera()->getSamples() << endl;
+
 	// Then loop over each pixel in the image, shooting a ray
 	// through that pixel and finding its intersection with
 	// the scene.  Write the color at the intersection to that
@@ -179,6 +196,56 @@ int main( int argc, char* argv[] )
 				Hit h;
 				h = Hit( FLT_MAX, NULL, Vector3f( 0, 0, 0 ) );
 
+				Vector3f DOF;
+				//Depth of Field
+				if (args.depth_of_field == 1)
+				{
+					//Camera Properties
+					float aperture = 1/scene.getCamera()->getFStop();
+					float focal_length = scene.getCamera()->getFocalLength();
+					int samples = scene.getCamera()->getSamples();
+
+					//DOF Variables
+					Vector3f focal_point = currentRay.pointAtParameter(focal_length);
+
+					//Calculations
+					Vector3f rayOrigin = currentRay.getOrigin();
+
+					int castedSamples = 0;
+
+					float LO = -aperture;
+					float HI = aperture;
+
+					#pragma omp parallel for schedule(dynamic)
+					for (register int k = 0; k < samples; ++k)
+					{
+						float xOffset = LO + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / (HI - LO)));
+						float yOffset = LO + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / (HI - LO)));
+						float zOffset = LO + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / (HI - LO)));
+					
+						//Generating New Ray
+						Vector3f newOrigin(rayOrigin[0] + xOffset, rayOrigin[1] + yOffset, rayOrigin[2] + zOffset);
+						Vector3f newDirection = (focal_point - newOrigin).normalized();
+						Ray newRay(newOrigin, newDirection);
+
+						//Generating new Hit
+						Hit newHit = Hit(FLT_MAX, NULL, Vector3f(0, 0, 0));
+
+						//Tracing the Ray
+						Matrix3f tempBuffer = engine.traceRay(newRay,
+							scene.getCamera()->getTMin(), 0, 1.0, newHit);
+
+						#pragma omp critical
+						{
+							//Getting Pixel Color
+							DOF += tempBuffer.getCol(0);
+
+							castedSamples++;
+						}
+					}
+
+					DOF = DOF / castedSamples;
+				}
 
 				Matrix3f colors;
 
@@ -187,6 +254,10 @@ int main( int argc, char* argv[] )
 						scene.getCamera()->getTMin(), 0
 						, 1.0, h);
 				
+				if (args.depth_of_field == 1)
+				{
+					colors.setCol(0, DOF);
+				}
 
 				//Saving the output in the image objects
 				outputImage.SetPixel(i, j, colors.getCol(0));
@@ -230,9 +301,65 @@ int main( int argc, char* argv[] )
 				Hit h;
 				h = Hit( FLT_MAX, NULL, Vector3f( 0, 0, 0 ) );
 
+				Vector3f DOF;
+				//Depth of Field
+				if (args.depth_of_field == 1)
+				{
+					//Camera Properties
+					float aperture = 1 / scene.getCamera()->getFStop();
+					float focal_length = scene.getCamera()->getFocalLength();
+					int samples = scene.getCamera()->getSamples();
+
+					//DOF Variables
+					Vector3f focal_point = currentRay.pointAtParameter(focal_length);
+
+					//Calculations
+					Vector3f rayOrigin = currentRay.getOrigin();
+
+					int castedSamples = 0;
+
+					float LO = -aperture;
+					float HI = aperture;
+
+					#pragma omp parallel for schedule(dynamic)
+					for (register int k = 0; k < samples; ++k)
+					{
+						float xOffset = LO + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / (HI - LO)));
+						float yOffset = LO + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / (HI - LO)));
+						float zOffset = LO + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / (HI - LO)));
+
+						//Generating New Ray
+						Vector3f newOrigin(rayOrigin[0] + xOffset, rayOrigin[1] + yOffset, rayOrigin[2] + zOffset);
+						Vector3f newDirection = (focal_point - newOrigin).normalized();
+						Ray newRay(newOrigin, newDirection);
+
+						//Generating new Hit
+						Hit newHit = Hit(FLT_MAX, NULL, Vector3f(0, 0, 0));
+
+						//Tracing the Ray
+						Matrix3f tempBuffer = engine.traceRay(newRay,
+							scene.getCamera()->getTMin(), 0, 1.0, newHit);
+
+						#pragma omp critical
+						{
+							//Getting Pixel Color
+							DOF += tempBuffer.getCol(0);
+
+							castedSamples++;
+						}
+					}
+
+					DOF = DOF / castedSamples;
+				}
+
 				Matrix3f colors = engine.traceRay(currentRay, 
 							scene.getCamera()->getTMin(), 0
 							, 1.0, h);
+
+				if (args.depth_of_field == 1)
+				{
+					colors.setCol(0, DOF);
+				}
 
 				superOutput.SetPixel(j, i, colors.getCol(0));
 				superDepth.SetPixel(j, i, colors.getCol(1));
@@ -442,6 +569,13 @@ int main( int argc, char* argv[] )
 		{
 			//Adding Samples to the output name
 			sprintf(buffer1, "_SAMPLESx%d", scene.getSamples());
+			outputLocation += buffer1;
+		}
+
+		if (args.depth_of_field == 1)
+		{
+			//Adding Samples to the output name
+			sprintf(buffer1, "_DOFx%d", scene.getCamera()->getSamples());
 			outputLocation += buffer1;
 		}
 		

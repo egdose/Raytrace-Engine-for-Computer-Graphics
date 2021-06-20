@@ -1,7 +1,7 @@
 -input scene01_plane.txt  -size 1200 1200 -output 1.bmp -shadows -bounces 3 -depth 0 20 1z_depth.bmp -normals 1z_normal.bmp
 
 -input scene_custom.txt  -size 1200 1200 -output 0.bmp -shadows -bounces 3 -depth 0 20 0z_depth.bmp -normals 0z_normal.bmp
--input scene_custom.txt  -size 1200 1200 -output 0.bmp -shadows -jitter -filter -bounces 3 -depth 0 10 0z_depth.bmp -normals 0z_normal.bmp
+-input scene_custom.txt  -size 1200 1200 -output 0.bmp -shadows -jitter -filter -bounces 3 -depth 0 20 0z_depth.bmp -normals 0z_normal.bmp
 
 -input scene_custom2.txt  -size 1200 1200 -output Custom2.bmp -shadows -bounces 3 -depth 0 20 Custom2z_depth.bmp -normals Custom2z_normal.bmp
 -input scene_custom2.txt  -size 1200 1200 -output Custom2.bmp .bmp -shadows -jitter -filter -bounces 3 -depth 0 10 Custom2z_depth.bmp -normals Custom2z_normal.bmp

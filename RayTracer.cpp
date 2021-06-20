@@ -165,9 +165,66 @@ Matrix3f RayTracer::traceRay( Ray& currentRay, float tmin, int bounces,
 						}
 					}
 
-					if (intersectedRays > 0)
+					//3 Rays per sample, x offset, y offset, z offset
+					for (register int i = 0; i < samples; ++i)
 					{
+						float curOffset = (offsetValue / samples) * i;
+
+						//Generating 3 Directions
+						Vector3f offsetDirectionX(dirToLight[0] - curOffset, dirToLight[1], dirToLight[2]);
+						Vector3f offsetDirectionY(dirToLight[0], dirToLight[1] - curOffset, dirToLight[2]);
+						Vector3f offsetDirectionZ(dirToLight[0], dirToLight[1], dirToLight[2] - curOffset);
+
+						//Generating 3 New Rays
+						Ray rayX(intersectionPoint, offsetDirectionX);
+						Ray rayY(intersectionPoint, offsetDirectionY);
+						Ray rayZ(intersectionPoint, offsetDirectionZ);
+
+						//Generating 3 New Hits
+						Hit hitX(distanceToLight, NULL, NULL);
+						Hit hitY(distanceToLight, NULL, NULL);
+						Hit hitZ(distanceToLight, NULL, NULL);
+
+						//CHECKING X RAY
+						if (g->intersectShadowRay(rayX, hitX, EPSILON))
+						{
+							intersectedRays++;
+						}
+						else
+						{
+							softShadow += hit.getMaterial()->Shade(currentRay, hit, offsetDirectionX, lightColor);
+						}
+						if (i == 0)
+						{
+							totalRays += 1;
+							continue;
+						}
+						else
+						{
+							totalRays += 3;
+						}
+
+						//CHECKING Y RAY
+						if (g->intersectShadowRay(rayY, hitY, EPSILON))
+						{
+							intersectedRays++;
+						}
+						else
+						{
+							softShadow += hit.getMaterial()->Shade(currentRay, hit, offsetDirectionY, lightColor);
+						}
+
+						//CHECKING Z RAY
+						if (g->intersectShadowRay(rayZ, hitZ, EPSILON))
+						{
+							intersectedRays++;
+						}
+						else
+						{
+							softShadow += hit.getMaterial()->Shade(currentRay, hit, offsetDirectionZ, lightColor);
+						}
 					}
+
 				
 					float lightIntensity = (totalRays - intersectedRays) / (totalRays);
 

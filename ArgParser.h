@@ -56,6 +56,11 @@ public:
 		//cout << "Shadows\n";
 	shadows = 1;
 	}
+
+	//Depth of Field
+	else if (strcmp(argv[i], "-dof") == 0) {
+		depth_of_field = 1;
+	}
 	
 	// supersampling
 	else if (strcmp(argv[i],"-jitter")==0) {
@@ -87,6 +92,7 @@ public:
     depth_max = 1;
     bounces = 4;
     shadows = 0;
+	depth_of_field = 0;
 
     // sampling
     jitter = 0;
@@ -111,6 +117,7 @@ public:
   float depth_max;
   int bounces;
   int shadows;
+  int depth_of_field;
 
   // supersampling
   int jitter;
