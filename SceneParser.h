@@ -82,6 +82,20 @@ public:
         return group;
     }
 
+    int getSamples() const
+    {
+        int samples = 1;
+        for (register int i = 0; i < num_lights; ++i)
+        {
+            if (getLight(i)->type != 'p')
+            {
+                samples = getLight(i)->samples;
+            }
+        }
+
+        return samples;
+    }
+
 private:
 
     SceneParser()

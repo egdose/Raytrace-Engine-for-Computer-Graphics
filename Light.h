@@ -20,17 +20,20 @@ public:
     }
 
     virtual void getIllumination( const Vector3f& p, Vector3f& dir, Vector3f& col, float& distanceToLight ) const = 0;
-
+    char type;
+    int samples;
 };
 
 class DirectionalLight : public Light
 {
 public:
 
-    DirectionalLight( const Vector3f& d, const Vector3f& c )
+    DirectionalLight( const Vector3f& d, const Vector3f& c, int s = 1)
     {
         direction = d.normalized();
         color = c;
+        samples = s;
+        type = 'd';
     }
 
     ~DirectionalLight()
@@ -54,7 +57,6 @@ private:
 
     Vector3f direction;
     Vector3f color;
-
 };
 
 class PointLight : public Light
@@ -65,7 +67,8 @@ public:
     {
         position = p;
         color = c;
-      falloff = fall;
+        falloff = fall;
+        type = 'p';
     }
 
     ~PointLight()

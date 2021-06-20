@@ -183,8 +183,15 @@ Light* SceneParser::parseDirectionalLight() {
     Vector3f direction = readVector3f();
     getToken(token); assert (!strcmp(token, "color"));
     Vector3f color = readVector3f();
-    getToken(token); assert (!strcmp(token, "}"));
-    return new DirectionalLight(direction,color);
+    getToken(token); 
+    int samples = 1;
+    if (!strcmp(token, "samples"))
+    {
+        samples = readInt();
+        getToken(token);
+    }
+    assert (!strcmp(token, "}"));
+    return new DirectionalLight(direction,color, samples);
 }
 Light* SceneParser::parsePointLight() {
     char token[MAX_PARSER_TOKEN_LENGTH];

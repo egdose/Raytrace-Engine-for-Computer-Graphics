@@ -28,6 +28,8 @@ using namespace std::chrono;
 constexpr auto WIDTH = 2000;
 constexpr auto HEIGHT = 2000;
 
+#define RENDER_DIRECTORY "renders/"
+
 float clampedDepth ( float depthInput, float depthMin , float depthMax);
 
 #include "bitmap_image.hpp"
@@ -408,20 +410,92 @@ int main( int argc, char* argv[] )
 	//Saving Output Image
 	if(args.output_file != nullptr)
 	{
-		printf("Exporting the Output BMP File: %s\n", args.output_file);
-		outputImage.SaveBMP(args.output_file);
+		string outputLocation = RENDER_DIRECTORY;
+		string output_file = args.output_file;
+
+		int dotIndex = -1;
+		for (register int i = 0; i < output_file.length(); ++i)
+		{
+			if (output_file.at(i) == '.')
+			{
+				dotIndex = i;
+				break;
+			}
+		}
+
+		outputLocation += output_file.substr(0, dotIndex);
+
+		char buffer1[100];
+
+		//Adding Dimensions to output name
+		sprintf(buffer1, "_%dx%d", WIDTH, HEIGHT);
+		outputLocation += buffer1;
+
+		if (args.jitter == 1)
+		{
+			//Adding Super Sampling Resolution to output name
+			sprintf(buffer1, "_SSx%d", SUPERSAMPLE_X);
+			outputLocation += buffer1;
+		}
+
+		if (args.shadows == 1)
+		{
+			//Adding Samples to the output name
+			sprintf(buffer1, "_SAMPLESx%d", scene.getSamples());
+			outputLocation += buffer1;
+		}
+		
+
+		outputLocation += output_file.substr(dotIndex, output_file.length());
+
+		printf("Exporting the Output BMP File: %s\n", outputLocation.c_str());
+		outputImage.SaveBMP(outputLocation.c_str());
 	}
 	//Saving Depth Map
 	if(args.depth_file != nullptr)
 	{
-		printf("Exporting the Depth Map File: %s\n", args.depth_file);
-		depthImage.SaveBMP(args.depth_file);
+		string outputLocation = RENDER_DIRECTORY;
+		string output_file = args.depth_file;
+
+		int dotIndex = -1;
+		for (register int i = 0; i < output_file.length(); ++i)
+		{
+			if (output_file.at(i) == '.')
+			{
+				dotIndex = i;
+				break;
+			}
+		}
+
+		outputLocation += output_file.substr(0, dotIndex);
+
+		outputLocation += output_file.substr(dotIndex, output_file.length());
+
+		printf("Exporting the Depth Map File: %s\n", outputLocation.c_str());
+		depthImage.SaveBMP(outputLocation.c_str());
 	}
 	//Saving Normal Image
 	if(args.normals_file != nullptr)
 	{
-		printf("Exporting the Normal BMP File: %s\n", args.normals_file);
-		normalImage.SaveBMP(args.normals_file);
+		string outputLocation = RENDER_DIRECTORY;
+		string output_file = args.normals_file;
+
+		int dotIndex = -1;
+		for (register int i = 0; i < output_file.length(); ++i)
+		{
+			if (output_file.at(i) == '.')
+			{
+				dotIndex = i;
+				break;
+			}
+		}
+
+		outputLocation += output_file.substr(0, dotIndex);
+
+		outputLocation += output_file.substr(dotIndex, output_file.length());
+
+		printf("Exporting the Normal BMP File: %s\n", outputLocation.c_str());
+		normalImage.SaveBMP(outputLocation.c_str());
 	}
 	std::cout << "-----------------------------------\n";
 
